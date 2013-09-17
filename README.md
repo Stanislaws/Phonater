@@ -2,6 +2,7 @@ Phonater
 ========
 
    Phonater - reformats phone numbers in a specific way
+   
    Copyright (C) 2013  Jan Zajaczkowski
  
 This program is free software: you can redistribute it and/or modify
