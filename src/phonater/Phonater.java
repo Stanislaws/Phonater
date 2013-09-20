@@ -16,31 +16,70 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package phonater;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 
 /**
  *  Reformats phone numbers in a specific way
  */
 public class Phonater extends JFrame{
-
+    private JButton paste = new JButton("P");    
+    //phone field
     private JTextField phone = new JTextField(15);
-    
-    private JButton fix = new JButton("");
+    //fix button
+    private JButton fix = new JButton("F");
+    //reset button
+    private JButton reset = new JButton("R");
 
     /**
      * Defines the GUI
      */
     public Phonater (){
+        //define a new jpanel
         JPanel jp = new JPanel();
-        jp.add(phone);
-        
-        fix.setPreferredSize(new Dimension(20,20));
-        
+        paste.setPreferredSize(new Dimension(20,20));     
+        paste.setBorder(null);
+        paste.setBorderPainted(false);
+        paste.setMargin(new Insets(0,0,0,0));
+        paste.setToolTipText("Click to Paste the copied phone number.");
+        jp.add(paste);
+        //set the parameters of the fix button
+        fix.setPreferredSize(new Dimension(20,20));     
+        fix.setBorder(null);
+        fix.setBorderPainted(false);
+        fix.setMargin(new Insets(0,0,0,0));
+        fix.setToolTipText("Click the Fix the number entered in the box.");
+        //add the fix button to the jpanel
         jp.add(fix);
+        //sets the tooltip of the phone box
+        phone.setToolTipText("Enter the phone number to be formatted.");
+        //add the phone field to the jpanel
+        jp.add(phone);        
+        //set the parameters of the reset button
+        reset.setPreferredSize(new Dimension(20,20));
+        reset.setBorder(null);
+        reset.setBorderPainted(false);
+        reset.setMargin(new Insets(0,0,0,0));
+        reset.setToolTipText("Click to Reset the contents of the box.");
+        //add the reset button to the jpanel
+        jp.add(reset);
+        //add the jpanel
         add(jp);
-          
+        paste.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pasteNumber();
+            }
+        });
+        //define an action for the phone field
         phone.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,12 +87,40 @@ public class Phonater extends JFrame{
             }       
         });
         
+        //define an action for the fix button
         fix.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 fixNumber();
             }       
         });
+        //define an action for the reset button
+        reset.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetNumber();
+            }      
+        });
+    }
+    /**
+     * Pastes the contents of the clipboard into the phone text field
+     */
+    public void pasteNumber(){
+        phone.paste();
+        //request focus to be on the text box
+        phone.requestFocus();
+        //highlight the contents of the text box
+        phone.selectAll();
+    }
+    /**
+     * Clears the phone text field
+     */
+    public void resetNumber(){
+        phone.setText("");
+        //request focus to be on the text box
+        phone.requestFocus();
+        //highlight the contents of the text box
+        phone.selectAll();
     }
     
     /**
